@@ -22,14 +22,16 @@ def solution(queue1, queue2):
     while t < max_op:
         if sum1 == target:
             return t
+        
         elif sum1 > target:
-            value = queue1.popleft()
-            sum1 -= value
-            queue2.append(value)
+            q = queue1.popleft()
+            sum1 -= q
+            queue2.append(q)
+            
         else:
-            value = queue2.popleft()
-            sum1 += value
-            queue1.append(value)
+            q = queue2.popleft()
+            sum1 += q
+            queue1.append(q)
 
         t += 1
 
