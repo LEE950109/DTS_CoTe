@@ -25,7 +25,7 @@ def solution(queue1, queue2):
         
         elif sum1 > target:
             q = queue1.popleft()
-            sum1 -= q
+            sum1 -= q   # 처음에 sum() 사용하니까 시간 초과 > 최대 O(n^2)
             queue2.append(q)
             
         else:
