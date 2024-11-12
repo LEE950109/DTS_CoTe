@@ -1,17 +1,18 @@
+from collections import deque
+
 def solution(info, edges):
     tree = [[] for _ in range(len(info))]
     for edge in edges:
         tree[edge[0]].append(edge[1])
         
     status = [[0, 1, 0, set()]]
+    status = deque(status)
     max_sheep = 0
 
     while status:
-        now, sheep, wolf, nodes = status.pop(0)
+        now, sheep, wolf, nodes = status.popleft()
         max_sheep = max(max_sheep, sheep)
         nodes.update(tree[now])
-
-        print(nodes)
 
         for node in nodes:
             if info[node] == 1:
