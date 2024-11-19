@@ -1,17 +1,38 @@
 def solution(n, words):
-    answer = [0, 0]
-    check_len = set()
-    l_before = 0
-    end = words[0][0]
-    
+    """
+    끝말잇기 게임에서 규칙 위반자를 찾아 해당 플레이어 번호와 차례를 반환하는 함수.
+
+    규칙:
+    1. 이전 단어의 끝 글자로 시작해야 함.
+    2. 이미 말한 단어를 다시 말하면 안 됨.
+    3. 단어가 유효하면 다음 단어로 진행.
+
+    매개변수:
+    - n: 게임에 참여한 사람 수.
+    - words: 사람들이 순서대로 말한 단어 리스트.
+
+    반환값:
+    - [위반한 사람 번호, 해당 차례]를 리스트로 반환. 규칙 위반이 없으면 [0, 0] 반환.
+    """
+    answer = [0, 0]  # 규칙 위반이 없는 경우 반환될 기본 값.
+    check_len = set()  # 이미 말한 단어를 추적하기 위한 집합.
+    l_before = 0  # 직전까지 고유 단어의 개수를 저장.
+    end = words[0][0]  # 이전 단어의 마지막 글자. 첫 단어의 첫 글자로 초기화.
+
+    # words 리스트를 순회하며 각 단어를 검사
     for i, word in enumerate(words):
-        check_len.add(word)
-        l_now = len(check_len)
+        check_len.add(word)  # 현재 단어를 집합에 추가.
+        l_now = len(check_len)  # 현재 집합의 길이(고유 단어 개수) 계산.
 
+        # 규칙 위반 조건:
+        # 1. 이미 말한 단어를 다시 말한 경우: 집합 길이가 이전과 동일함.
+        # 2. 이전 단어의 끝 글자와 현재 단어의 첫 글자가 다를 경우.
         if l_now == l_before or end != word[0]:
-            return [i%n + 1, i//n + 1]
+            # 규칙을 위반한 사람과 차례를 계산하여 반환.
+            return [i % n + 1, i // n + 1]
         else:
-            l_before = l_now
-            end = word[-1]
+            # 규칙 위반이 없으면, 다음 단어로 진행.
+            l_before = l_now  # 현재 고유 단어 개수를 업데이트.
+            end = word[-1]  # 현재 단어의 마지막 글자로 끝 글자 업데이트.
 
-    return answer
+    return answer  # 규칙 위반이 없으면 기본값 반환.
