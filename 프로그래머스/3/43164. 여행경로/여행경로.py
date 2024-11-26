@@ -1,4 +1,11 @@
-from collections import deque
+def dfs(graph, tree, path):
+    while tree:
+        current = tree[-1]
+        if current in graph and graph[current]:
+            next_destination = graph[current].pop(0)
+            tree.append(next_destination)
+        else:
+            path.append(tree.pop())
 
 def solution(tickets):
     graph = {}
@@ -11,15 +18,9 @@ def solution(tickets):
         graph[key].sort()
     
     path = []
-    tree = deque(["ICN"])
+    tree = ["ICN"]  # 리스트를 사용하는 간단한 스택으로 변경
     
-    while tree:
-        current = tree[-1]
-        if current in graph and graph[current]:
-            next_destination = graph[current].pop(0)
-            tree.append(next_destination)
-        else:
-            path.append(tree.pop())
+    dfs(graph, tree, path)
     
     return path[::-1]
 
