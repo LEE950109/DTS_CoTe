@@ -1,9 +1,7 @@
-from collections import deque  # BFS(너비 우선 탐색)에 사용할 데크(deque) 모듈을 가져옴
+from collections import deque 
 
-# 문제 해결 함수
 def solution(numbers, target):
-    # BFS를 위한 큐 초기화 (초기 상태: 인덱스 0, 현재 합계 0)
-    tree = deque([(0, 0)])  
+    tree = deque([(0, 0)])  # BFS를 위한 큐 초기화 (초기 상태: 인덱스 0, 현재 합계 0)
     count = 0  # 목표(target) 숫자를 만드는 경우의 수를 저장할 변수
     
     # BFS 탐색 시작
