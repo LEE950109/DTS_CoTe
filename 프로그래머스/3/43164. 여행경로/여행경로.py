@@ -1,26 +1,34 @@
-def dfs(graph, tree, path):
-    while tree:
-        current = tree[-1]
-        if current in graph and graph[current]:
-            next_destination = graph[current].pop(0)
-            tree.append(next_destination)
+import heapq
+from collections import defaultdict
+
+def dfs(graph, stack, path):
+    while stack:
+        current = stack[-1]
+        # 현재 공항에서 더 방문할 목적지가 있는 경우
+        if graph[current]:
+            # 힙에서 가장 사전순으로 빠른 목적지를 가져옴
+            next_destination = heapq.heappop(graph[current])
+            stack.append(next_destination)  # 다음 목적지 추가
         else:
-            path.append(tree.pop())
+            # 더 이상 갈 곳이 없으면 경로에 추가
+            path.append(stack.pop())
 
 def solution(tickets):
-    graph = {}
+    # defaultdict를 사용하여 그래프를 생성
+    graph = defaultdict(list)
+
+    # 각 티켓 정보를 그래프에 추가
     for a, b in tickets:
-        if a not in graph:
-            graph[a] = []
-        graph[a].append(b)
-    
-    for key in graph:
-        graph[key].sort()
-    
+        heapq.heappush(graph[a], b)  # 사전순으로 관리하기 위해 힙에 삽입
+
+    # 최종 경로를 저장할 리스트
     path = []
-    tree = ["ICN"]  # 리스트를 사용하는 간단한 스택으로 변경
+    # 탐색 시작 공항은 "ICN"
+    stack = ["ICN"]
+
+    # DFS 수행
+    dfs(graph, stack, path)
     
-    dfs(graph, tree, path)
-    
+    # 역순으로 저장된 경로를 뒤집어서 반환
     return path[::-1]
 
